@@ -8,7 +8,8 @@ Over the past few weeks, [Oswald Foundation](https://oswald.foundation) has been
 
 What's great about this API is how easy it is to implement. Add the following line of code before the `<body>` tag closes.
 ```
-    <script src="https://oswald.foundation/developers/oswald.js">
+<script src="https://oswald.foundation/developers/oswald.js">
+<script src="https://oswald.foundation/developers/oswald.min.js">
 ```
 
 ## License
