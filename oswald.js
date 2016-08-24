@@ -37,9 +37,9 @@ oswald.call = function(item) {
         var documentBody = document.body || document.querySelector("body");
         var oswaldStyles = document.createElement("style");
 
-        // Add CSS to header
+        // Add global CSS
         oswaldStyles.setAttribute("type", "text/css");
-        oswaldStyles.innerHTML = ".o" + global_clientID + "{z-index:999999;position:absolute;background:whitesmoke;padding:20px;width:300px;max-width:100%;height:200px;border-radius:3px;overflow:auto}.o" + global_clientID + "triangle{content:'';width:0;height:0;border-top: 7px solid transparent;border-bottom: 7px solid transparent;border-right: 10px solid whitesmoke;position:absolute;z-index:999999}.oswald-cross-btn{position:absolute;right:20px;top:15px;font-size:150%;cursor:pointer}.o" + global_clientID + "bg{position:fixed;left:0;right:0;top:0;bottom:0;z-index:999998;background:rgba(0,0,0,0.5)}.o" + global_clientID + "::-webkit-scrollbar{width:15px;border-radius:3px}.o" + global_clientID + "::-webkit-scrollbar-track{}.o" + global_clientID + "::-webkit-scrollbar-thumb{background:#aaa;border:5px solid whitesmoke;border-radius:3px}";
+        oswaldStyles.innerHTML = ".o" + global_clientID + "{z-index:999999;text-align:center;position:absolute;background:whitesmoke;padding:30px 0;width:300px;max-width:100%;height:200px;border-radius:3px;overflow:auto}.o" + global_clientID + "triangle{content:'';width:0;height:0;border-top: 7px solid transparent;border-bottom: 7px solid transparent;border-right: 10px solid whitesmoke;position:absolute;z-index:999999}.oswald-cross-btn{position:absolute;right:20px;top:15px;font-size:150%;cursor:pointer}.o" + global_clientID + "bg{position:fixed;left:0;right:0;top:0;bottom:0;z-index:999998;background:rgba(0,0,0,0.5)}.o" + global_clientID + "::-webkit-scrollbar{width:15px;border-radius:3px}.o" + global_clientID + "::-webkit-scrollbar-track{}.o" + global_clientID + "::-webkit-scrollbar-thumb{background:#aaa;border:5px solid whitesmoke;border-radius:3px}";
         documentHead.appendChild(oswaldStyles);
 
         // Create lightbox background layer
@@ -104,9 +104,11 @@ oswald.call = function(item) {
                 if (this.status >= 200 && this.status < 400) {
                     var data = JSON.parse(this.responseText);
                     oswaldStyles.innerHTML += data[1];
-                    setTimeout(function() {
-                        oswaldLoad.innerHTML = data[3] + data[2];
-                    }, 1000);
+                    var oswaldCategories = "";
+                    Object.keys(data[4]).forEach(function(item) {
+                        oswaldCategories += "<button class='oswald-button'>" + item + "</button>";
+                    });
+                    oswaldLoad.innerHTML = data[3] + oswaldCategories + data[2];
                 } else {
                     errorlog("Error: Communication with Oswald server failed");
                 }
@@ -129,6 +131,17 @@ var errorlog = function(content) {
     console.log(content);
 }
 
+// http://tokenposts.blogspot.in/2012/04/javascript-objectkeys-browser.html
+if (!Object.keys) Object.keys = function(o) {
+    if (o !== Object(o))
+        throw new TypeError("Object.keys called on a non-object");
+    var k = [],
+        p;
+    for (p in o)
+        if (Object.prototype.hasOwnProperty.call(o, p)) k.push(p);
+    return k;
+}
+
 // Document ready state IE8+
 var ready = function(fn) {
     if (document.readyState != "loading") {
@@ -142,6 +155,7 @@ var ready = function(fn) {
         });
     }
 };
+
 // Adding event listeners IE8+
 var addEventListener = function(el, eventName, handler) {
     if (el.addEventListener) {
