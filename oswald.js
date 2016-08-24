@@ -15,12 +15,7 @@ var oswald = function() {
 
 var global_clientID = "";
 oswald.unqiueID = function() {
-    var characters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "-", "_"];
-    var temp_id = "";
-    for (i = 0; i < 16; i++) {
-        temp_id += characters[Math.floor(Math.random() * characters.length)];
-    }
-    return temp_id;
+    return Math.random().toString(36).slice(2);
 }
 
 oswald.called = 0;
@@ -39,7 +34,7 @@ oswald.call = function(item) {
 
         // Add global CSS
         oswaldStyles.setAttribute("type", "text/css");
-        oswaldStyles.innerHTML = ".o" + global_clientID + "{z-index:999999;text-align:center;position:absolute;background:whitesmoke;padding:30px 0;width:300px;max-width:100%;height:200px;border-radius:3px;overflow:auto}.o" + global_clientID + "triangle{content:'';width:0;height:0;border-top: 7px solid transparent;border-bottom: 7px solid transparent;border-right: 10px solid whitesmoke;position:absolute;z-index:999999}.oswald-cross-btn{position:absolute;right:20px;top:15px;font-size:150%;cursor:pointer}.o" + global_clientID + "bg{position:fixed;left:0;right:0;top:0;bottom:0;z-index:999998;background:rgba(0,0,0,0.5)}.o" + global_clientID + "::-webkit-scrollbar{width:15px;border-radius:3px}.o" + global_clientID + "::-webkit-scrollbar-track{}.o" + global_clientID + "::-webkit-scrollbar-thumb{background:#aaa;border:5px solid whitesmoke;border-radius:3px}";
+        oswaldStyles.innerHTML = ".o" + global_clientID + "{z-index:999999;text-align:center;position:absolute;background:#fff;padding:30px;box-sizing:border-box;width:300px;max-width:100%;height:300px;border-radius:3px;overflow:auto}.o" + global_clientID + "triangle{content:'';width:0;height:0;border-top: 7px solid transparent;border-bottom: 7px solid transparent;border-right: 10px solid #fff;position:absolute;z-index:999999}.oswald-cross-btn{position:absolute;right:20px;top:15px;font-size:150%;cursor:pointer}.o" + global_clientID + "bg{position:fixed;left:0;right:0;top:0;bottom:0;z-index:999998;background:rgba(0,0,0,0.5)}.o" + global_clientID + "::-webkit-scrollbar{width:10px;border-radius:3px}.o" + global_clientID + "::-webkit-scrollbar-track{}.o" + global_clientID + "::-webkit-scrollbar-thumb{background:#aaa;border:5px solid whitesmoke;border-left:0;border-radius:3px}";
         documentHead.appendChild(oswaldStyles);
 
         // Create lightbox background layer
@@ -106,6 +101,7 @@ oswald.call = function(item) {
                     oswaldStyles.innerHTML += data[1];
                     var oswaldCategories = "";
                     Object.keys(data[4]).forEach(function(item) {
+                        // Add Accessibility options
                         oswaldCategories += "<button class='oswald-button'>" + item + "</button>";
                     });
                     oswaldLoad.innerHTML = data[3] + oswaldCategories + data[2];

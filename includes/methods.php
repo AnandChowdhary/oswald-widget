@@ -2,19 +2,22 @@
     header("Access-Control-Allow-Origin: *");
     $modes = array(
         "Dyslexia-friendly Mode" => "hello world",
-        "High Contrast Mode" => "new info",
-        "Night Reading Mode" => "potato"
+        "Large Font Size" => "new info",
+        "Dark Mode" => "potato"
     );
     if (isset($_GET["oswald_uniqueID"])) {
         $uid = $_GET["oswald_uniqueID"];
         $info = array(
             $uid,
-            ".oswald-footer{font-size:80%;color:#aaa;margin-top:20px}.oswald-footer a {color:inherit;text-decoration:none}.oswald-heading{font-weight:bold;font-size:110%;margin-bottom:20px}.oswald-button{display:block;padding:8px 12px;margin:5px auto}.oswald-button:first-of-type{margin-top:20px}",
-            "<div class='oswald-footer'><a href='https://oswald.foundation?compaign=poweredBy&type=jswidget&uid=" . $uid . "' target='_blank'>Oswald Accessibility Widget 0.1</a></div>",
+            ".oswald-footer{font-size:70%;color:#aaa;margin-top:20px}.oswald-footer a {color:inherit;text-decoration:none}.oswald-footer a:hover{color:#666}.oswald-heading{font-weight:bold;font-size:110%;margin-bottom:20px}.oswald-button{color: inherit; text-decoration: none; width: 100%; box-sizing: border-box; margin-top: 10px; font-weight: bold; outline: none; border: none; border-radius: 5px; cursor: pointer; background: #ddd; display: block; height: 40px; line-height: 40px;}.oswald-button:first-of-type{margin-top:20px}.oswald-button-active{background: #2792f3;color: white;}",
+            "<div class='oswald-footer'><a href='https://oswald.foundation?compaign=poweredBy&type=jswidget&uid=" . $uid . "' target='_blank' title='Oswald Accessibility Widget 0.1'>Powered by Oswald</a></div>",
             "<div class='oswald-content'>
                 <div class='oswald-heading'>Accessibility Settings</div>
-                This is the main content
-            </div>",
+                <p>
+                    Click on any one of the following settings to enable:
+                </p>
+            </div>
+            <button class='oswald-button oswald-button-active'>Default</button>",
             $modes
         );
     } else {
