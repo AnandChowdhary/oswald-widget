@@ -112,7 +112,7 @@ oswald.call = function(item) {
 
         // Call Oswald server
         var request = new XMLHttpRequest();
-        var requestURL = "includes/methods.php?oswald_uniqueID=" + global_clientID;
+        var requestURL = "https://oswald.foundation/developers/includes/methods.php?oswald_uniqueID=" + global_clientID;
         request.open("GET", requestURL, true);
         request.onreadystatechange = function() {
             if (this.readyState === 4) {
