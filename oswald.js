@@ -21,7 +21,7 @@ oswald.call = function(item) {
         var documentBody = document.body || document.querySelector("body");
         var oswaldStyles = document.createElement("style");
         oswaldStyles.setAttribute("type", "text/css");
-        oswaldStyles.innerHTML = ".o" + oswald_uniqueID + "{z-index:999999;position:absolute;background:whitesmoke;padding:20px;width:300px;max-width:100%;height:200px;border-radius:3px;overflow:auto}" + ".o" + oswald_uniqueID + ":before{content:'';width:0;height:0;border-left: 7px solid transparent;border-right: 7px solid transparent;border-bottom: 10px solid whitesmoke;position:absolute;left:10px;top:-10px;}.oswald-cross-btn{position:absolute;right:20px;top:15px;font-size:150%;cursor:pointer}.o" + oswald_uniqueID + "bg{position:fixed;left:0;right:0;top:0;bottom:0;z-index:999998;background:rgba(0,0,0,0.5)}.o" + oswald_uniqueID + "::-webkit-scrollbar{width:15px;border-radius:3px}.o" + oswald_uniqueID + "::-webkit-scrollbar-track{}.o" + oswald_uniqueID + "::-webkit-scrollbar-thumb{background:#aaa;border:5px solid whitesmoke;border-radius:3px}";
+        oswaldStyles.innerHTML = ".o" + oswald_uniqueID + "{z-index:999999;position:absolute;background:whitesmoke;padding:20px;width:300px;max-width:100%;height:200px;border-radius:3px;overflow:auto}.o" + oswald_uniqueID + "triangle{content:'';width:0;height:0;border-top: 7px solid transparent;border-bottom: 7px solid transparent;border-right: 10px solid whitesmoke;position:absolute;z-index:999999}.oswald-cross-btn{position:absolute;right:20px;top:15px;font-size:150%;cursor:pointer}.o" + oswald_uniqueID + "bg{position:fixed;left:0;right:0;top:0;bottom:0;z-index:999998;background:rgba(0,0,0,0.5)}.o" + oswald_uniqueID + "::-webkit-scrollbar{width:15px;border-radius:3px}.o" + oswald_uniqueID + "::-webkit-scrollbar-track{}.o" + oswald_uniqueID + "::-webkit-scrollbar-thumb{background:#aaa;border:5px solid whitesmoke;border-radius:3px}";
         documentHead.appendChild(oswaldStyles);
         var oswaldBackground = document.createElement("div");
         if (oswaldBackground.classList) {
@@ -32,6 +32,7 @@ oswald.call = function(item) {
         addEventListener(oswaldBackground, "click", function() {
             document.querySelector(".o" + oswald_uniqueID).style.display = "none";
             document.querySelector(".o" + oswald_uniqueID + "bg").style.display = "none";
+            document.querySelector(".o" + oswald_uniqueID + "triangle").style.display = "none";
         });
         var oswaldClient = document.createElement("div");
         if (oswaldClient.classList) {
@@ -39,10 +40,20 @@ oswald.call = function(item) {
         } else {
             oswaldClient.className += " " + ("o" + oswald_uniqueID);
         }
-        oswaldClient.style.left = item.offsetLeft;
-        oswaldClient.style.top = item.offsetTop + 40;
+        var oswaldClientTriangle = document.createElement("div");
+        var oswaldClientTriangle = document.createElement("div");
+        if (oswaldClientTriangle.classList) {
+            oswaldClientTriangle.classList.add("o" + oswald_uniqueID + "triangle");
+        } else {
+            oswaldClientTriangle.className += " " + ("o" + oswald_uniqueID + "triangle");
+        }
+        oswaldClient.style.left = item.offsetLeft + item.offsetWidth + 20;
+        oswaldClient.style.top = item.offsetTop - 16;
+        oswaldClientTriangle.style.left = item.offsetLeft + item.offsetWidth + 10;
+        oswaldClientTriangle.style.top = item.offsetTop;
         var oswaldLoad = document.createElement("div");
         documentBody.appendChild(oswaldClient);
+        documentBody.appendChild(oswaldClientTriangle);
         documentBody.appendChild(oswaldBackground);
         if (oswaldLoad.classList) {
             oswaldLoad.classList.add("oswald-loading");
@@ -71,6 +82,7 @@ oswald.call = function(item) {
         request = null;
     } else {
         document.querySelector(".o" + oswald_uniqueID).style.display = "";
+        document.querySelector(".o" + oswald_uniqueID + "triangle").style.display = "";
         document.querySelector(".o" + oswald_uniqueID + "bg").style.display = "";
     }
 }
