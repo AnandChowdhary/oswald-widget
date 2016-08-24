@@ -2,25 +2,31 @@
 
 ## Synopsis
 
-Over the past few weeks, [Oswald Foundation](https://oswald.foundation) has been working on introducing a global accessibility standard for web designers and developers. This API is a one-line customizable solution to help implement accessibility features like Dyslexia-friendly mode and Dark mode in websites.
+Over the past few weeks, [Oswald Foundation](https://oswald.foundation) has been working on introducing a global accessibility standard for web designers and developers. This API is a one-line customizable backward-compatible (IE8+) solution to help implement accessibility features like Dyslexia-friendly mode and Dark mode in websites.
 
 ## Code Example
 
 What's great about this API is how easy it is to implement. Add the following line of code before the `<body>` tag closes.
 ```
-<p><button data-oswald">Accessibility</button></p>
+<p><button data-oswald>Accessibility</button></p>
 <script src="https://oswald.foundation/developers/oswald.min.js">
 ```
 
 ## Options
 
 - Oswald looks for all elements matching `data-oswald` or class `oswald-service`. The accessibility service starts when a use clicks on any of these elements, which are typically links or buttons.
+- It adds class `oswald-on` and `oswald-off` based on the service status on the aforementioned elements.
 
 ## Roadmap
 
 These features should be coming soon:
 - Custom/editable accessibility themes
 - JS Methods for `oswald.start()` and more
+- Custom theme colors, CSS for client UI
+
+## Contribute
+
+The development mode of this script contains as many comments as I could add, it's hosted at `https://oswald.foundation/developers/oswald.min.js`. Got an idea? Throw in a pull request and we'll merge. :)
 
 ## License
 
