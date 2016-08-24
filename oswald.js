@@ -21,7 +21,7 @@ oswald.call = function(item) {
         var documentBody = document.body || document.querySelector("body");
         var oswaldStyles = document.createElement("style");
         oswaldStyles.setAttribute("type", "text/css");
-        oswaldStyles.innerHTML = ".o" + oswald_uniqueID + "{z-index:999999;position:absolute;background:whitesmoke;padding:20px;width:300px;max-width:100%;height:200px;border-radius:3px}" + ".o" + oswald_uniqueID + ":before{content:'';width:0;height:0;border-left: 7px solid transparent;border-right: 7px solid transparent;border-bottom: 10px solid whitesmoke;position:absolute;left:10px;top:-10px;}.oswald-cross-btn{position:absolute;right:20px;top:15px;font-size:150%;cursor:pointer}.o" + oswald_uniqueID + "bg{position:fixed;left:0;right:0;top:0;bottom:0;z-index:999998;background:rgba(0,0,0,0.5)}";
+        oswaldStyles.innerHTML = ".o" + oswald_uniqueID + "{z-index:999999;position:absolute;background:whitesmoke;padding:20px;width:300px;max-width:100%;height:200px;border-radius:3px;overflow:auto}" + ".o" + oswald_uniqueID + ":before{content:'';width:0;height:0;border-left: 7px solid transparent;border-right: 7px solid transparent;border-bottom: 10px solid whitesmoke;position:absolute;left:10px;top:-10px;}.oswald-cross-btn{position:absolute;right:20px;top:15px;font-size:150%;cursor:pointer}.o" + oswald_uniqueID + "bg{position:fixed;left:0;right:0;top:0;bottom:0;z-index:999998;background:rgba(0,0,0,0.5)}.o" + oswald_uniqueID + "::-webkit-scrollbar{width:15px;border-radius:3px}.o" + oswald_uniqueID + "::-webkit-scrollbar-track{}.o" + oswald_uniqueID + "::-webkit-scrollbar-thumb{background:#aaa;border:5px solid whitesmoke;border-radius:3px}";
         documentHead.appendChild(oswaldStyles);
         var oswaldBackground = document.createElement("div");
         if (oswaldBackground.classList) {
@@ -41,7 +41,6 @@ oswald.call = function(item) {
         }
         oswaldClient.style.left = item.offsetLeft;
         oswaldClient.style.top = item.offsetTop + 40;
-        oswaldClient.innerHTML = "<div class='oswald-cross-btn'>&times;</div>";
         var oswaldLoad = document.createElement("div");
         documentBody.appendChild(oswaldClient);
         documentBody.appendChild(oswaldBackground);
@@ -58,9 +57,10 @@ oswald.call = function(item) {
         request.onreadystatechange = function() {
             if (this.readyState === 4) {
                 if (this.status >= 200 && this.status < 400) {
-                    var info = this.responseText;
+                    var data = JSON.parse(this.responseText);
+                    oswaldStyles.innerHTML += data[1];
                     setTimeout(function() {
-                        oswaldLoad.innerHTML = info;
+                        oswaldLoad.innerHTML = data[3] + data[2];
                     }, 1000);
                 } else {
                     errorlog("Error: Communication with Oswald server failed");
@@ -69,6 +69,9 @@ oswald.call = function(item) {
         };
         request.send();
         request = null;
+    } else {
+        document.querySelector(".o" + oswald_uniqueID).style.display = "";
+        document.querySelector(".o" + oswald_uniqueID + "bg").style.display = "";
     }
 }
 
