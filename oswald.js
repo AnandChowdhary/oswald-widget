@@ -1,70 +1,104 @@
 var oswald = function() {
-
     var oswaldLinks = [].slice.call(document.querySelectorAll("[data-oswald], .oswald-service"));
     oswaldLinks.forEach(function(item) {
+        if (item.classList) {
+            item.classList.add("oswald-off");
+        } else {
+            item.className += " oswald-off";
+        }
         addEventListener(item, "click", function(e) {
             oswald.call(item);
             e.preventDefault();
         });
     });
+}
 
+var global_clientID = "";
+oswald.unqiueID = function() {
+    var characters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "-", "_"];
+    var temp_id = "";
+    for (i = 0; i < 16; i++) {
+        temp_id += characters[Math.floor(Math.random() * characters.length)];
+    }
+    return temp_id;
 }
 
 oswald.called = 0;
-var oswald_uniqueID = 0;
 oswald.call = function(item) {
+
     if (oswald.called == 0) {
-        oswald_uniqueID = parseInt(Math.random() * 10**10);
+
+        // Generate new client ID
+        global_clientID = oswald.unqiueID();
         oswald.called++;
-        // Add client to body
+
+        // Add client and related elements to body
         var documentHead = document.head || document.querySelector("head");
         var documentBody = document.body || document.querySelector("body");
         var oswaldStyles = document.createElement("style");
+
+        // Add CSS to header
         oswaldStyles.setAttribute("type", "text/css");
-        oswaldStyles.innerHTML = ".o" + oswald_uniqueID + "{z-index:999999;position:absolute;background:whitesmoke;padding:20px;width:300px;max-width:100%;height:200px;border-radius:3px;overflow:auto}.o" + oswald_uniqueID + "triangle{content:'';width:0;height:0;border-top: 7px solid transparent;border-bottom: 7px solid transparent;border-right: 10px solid whitesmoke;position:absolute;z-index:999999}.oswald-cross-btn{position:absolute;right:20px;top:15px;font-size:150%;cursor:pointer}.o" + oswald_uniqueID + "bg{position:fixed;left:0;right:0;top:0;bottom:0;z-index:999998;background:rgba(0,0,0,0.5)}.o" + oswald_uniqueID + "::-webkit-scrollbar{width:15px;border-radius:3px}.o" + oswald_uniqueID + "::-webkit-scrollbar-track{}.o" + oswald_uniqueID + "::-webkit-scrollbar-thumb{background:#aaa;border:5px solid whitesmoke;border-radius:3px}";
+        oswaldStyles.innerHTML = ".o" + global_clientID + "{z-index:999999;position:absolute;background:whitesmoke;padding:20px;width:300px;max-width:100%;height:200px;border-radius:3px;overflow:auto}.o" + global_clientID + "triangle{content:'';width:0;height:0;border-top: 7px solid transparent;border-bottom: 7px solid transparent;border-right: 10px solid whitesmoke;position:absolute;z-index:999999}.oswald-cross-btn{position:absolute;right:20px;top:15px;font-size:150%;cursor:pointer}.o" + global_clientID + "bg{position:fixed;left:0;right:0;top:0;bottom:0;z-index:999998;background:rgba(0,0,0,0.5)}.o" + global_clientID + "::-webkit-scrollbar{width:15px;border-radius:3px}.o" + global_clientID + "::-webkit-scrollbar-track{}.o" + global_clientID + "::-webkit-scrollbar-thumb{background:#aaa;border:5px solid whitesmoke;border-radius:3px}";
         documentHead.appendChild(oswaldStyles);
+
+        // Create lightbox background layer
         var oswaldBackground = document.createElement("div");
         if (oswaldBackground.classList) {
-            oswaldBackground.classList.add("o" + oswald_uniqueID + "bg");
+            oswaldBackground.classList.add("o" + global_clientID + "bg");
         } else {
-            oswaldBackground.className += " " + ("o" + oswald_uniqueID + "bg");
+            oswaldBackground.className += " " + ("o" + global_clientID + "bg");
         }
-        addEventListener(oswaldBackground, "click", function() {
-            document.querySelector(".o" + oswald_uniqueID).style.display = "none";
-            document.querySelector(".o" + oswald_uniqueID + "bg").style.display = "none";
-            document.querySelector(".o" + oswald_uniqueID + "triangle").style.display = "none";
-        });
+
+        // Add client UI
         var oswaldClient = document.createElement("div");
         if (oswaldClient.classList) {
-            oswaldClient.classList.add("o" + oswald_uniqueID);
+            oswaldClient.classList.add("o" + global_clientID);
         } else {
-            oswaldClient.className += " " + ("o" + oswald_uniqueID);
+            oswaldClient.className += " " + ("o" + global_clientID);
         }
-        var oswaldClientTriangle = document.createElement("div");
+
+        // Add client UI elements
         var oswaldClientTriangle = document.createElement("div");
         if (oswaldClientTriangle.classList) {
-            oswaldClientTriangle.classList.add("o" + oswald_uniqueID + "triangle");
+            oswaldClientTriangle.classList.add("o" + global_clientID + "triangle");
         } else {
-            oswaldClientTriangle.className += " " + ("o" + oswald_uniqueID + "triangle");
+            oswaldClientTriangle.className += " " + ("o" + global_clientID + "triangle");
         }
-        oswaldClient.style.left = item.offsetLeft + item.offsetWidth + 20;
-        oswaldClient.style.top = item.offsetTop - 16;
-        oswaldClientTriangle.style.left = item.offsetLeft + item.offsetWidth + 10;
-        oswaldClientTriangle.style.top = item.offsetTop;
+
+        // Add client preloader
         var oswaldLoad = document.createElement("div");
-        documentBody.appendChild(oswaldClient);
-        documentBody.appendChild(oswaldClientTriangle);
-        documentBody.appendChild(oswaldBackground);
         if (oswaldLoad.classList) {
             oswaldLoad.classList.add("oswald-loading");
         } else {
             oswaldLoad.className += " " + ("oswald-loading");
         }
+
+        // Add click functionality on lightbox
+        addEventListener(oswaldBackground, "click", function() {
+            document.querySelector(".o" + global_clientID).style.display = "none";
+            document.querySelector(".o" + global_clientID + "bg").style.display = "none";
+            document.querySelector(".o" + global_clientID + "triangle").style.display = "none";
+        });
+
+        // Add positioning to client UI
+        oswaldClient.style.left = item.offsetLeft + item.offsetWidth + 20;
+        oswaldClient.style.top = item.offsetTop - 16;
+
+        // Add positioning to client UI elements
+        oswaldClientTriangle.style.left = item.offsetLeft + item.offsetWidth + 10;
+        oswaldClientTriangle.style.top = item.offsetTop;
+
         oswaldLoad.innerHTML = "Loading...";
+        documentBody.appendChild(oswaldClient);
+        documentBody.appendChild(oswaldClientTriangle);
+        documentBody.appendChild(oswaldBackground);
         oswaldClient.appendChild(oswaldLoad);
+
         // Call Oswald server
         var request = new XMLHttpRequest();
-        request.open("GET", "includes/methods.php?oswald_uniqueID=" + oswald_uniqueID, true);
+        var requestURL = "includes/methods.php?oswald_uniqueID=" + global_clientID;
+        request.open("GET", requestURL, true);
         request.onreadystatechange = function() {
             if (this.readyState === 4) {
                 if (this.status >= 200 && this.status < 400) {
@@ -80,11 +114,15 @@ oswald.call = function(item) {
         };
         request.send();
         request = null;
+
     } else {
-        document.querySelector(".o" + oswald_uniqueID).style.display = "";
-        document.querySelector(".o" + oswald_uniqueID + "triangle").style.display = "";
-        document.querySelector(".o" + oswald_uniqueID + "bg").style.display = "";
+
+        document.querySelector(".o" + global_clientID).style.display = "";
+        document.querySelector(".o" + global_clientID + "triangle").style.display = "";
+        document.querySelector(".o" + global_clientID + "bg").style.display = "";
+
     }
+
 }
 
 var errorlog = function(content) {

@@ -1,5 +1,10 @@
 <?php
     header("Access-Control-Allow-Origin: *");
+    $modes = array(
+        "dyslexia" => "hello world",
+        "high-contrast" => "new info",
+        "night" => "potato"
+    );
     if (isset($_GET["oswald_uniqueID"])) {
         $uid = $_GET["oswald_uniqueID"];
         $info = array(
@@ -8,7 +13,8 @@
             "<div class='oswald-footer'><a href='https://oswald.foundation?compaign=poweredBy&type=jswidget&uid=" . $uid . "' target='_blank'>Powered by Oswald</a></div>",
             "<div class='oswald-content'>
                 This is the main content
-            </div>"
+            </div>",
+            $modes
         );
     } else {
         $info = array(

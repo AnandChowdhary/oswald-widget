@@ -9,12 +9,21 @@
         right: 100px;
         top: 100px;
     }
+    button.oswald-on:after {
+        content: " (On)";
+    }
+    button.oswald-off:after {
+        content: " (Off)";
+    }
+    button:after {
+        font-weight: bold;
+    }
 </style>
 <h2>Oswald Demo</h2>
 <p>
     Let's get this accessibility started! IE8+
 </p>
 <p>
-    <a href="#as" data-oswald>Accessibility</a>
+    <button data-oswald>Accessibility</button>
 </p>
 <script src="oswald.js"></script>
