@@ -1,8 +1,8 @@
 <?php
     header("Access-Control-Allow-Origin: *");
     $modes = array(
-        "Dyslexia-friendly Mode" => "hello world",
-        "Large Font Size" => "new info",
+        "Dyslexia-friendly Mode" => "*{background:yellow}",
+        "Large Font Size" => "body{font-size:20px !important}",
         "Dark Mode" => "potato"
     );
     if (isset($_GET["oswald_uniqueID"])) {
@@ -17,7 +17,7 @@
                     Click on any one of the following settings to enable:
                 </p>
             </div>
-            <button class='oswald-button oswald-button-active'>Default</button>",
+            <button data-button-id='-1' onclick='oswald.css(\"\", \"Default\", \"-1\");' class='oswald-button oswald-button-active'>Default</button>",
             $modes
         );
     } else {

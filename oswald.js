@@ -1,11 +1,6 @@
 var oswald = function() {
     var oswaldLinks = [].slice.call(document.querySelectorAll("[data-oswald], .oswald-service"));
     oswaldLinks.forEach(function(item) {
-        if (item.classList) {
-            item.classList.add("oswald-off");
-        } else {
-            item.className += " oswald-off";
-        }
         addEventListener(item, "click", function(e) {
             oswald.call(item);
             e.preventDefault();
@@ -16,6 +11,31 @@ var oswald = function() {
 var global_clientID = "";
 oswald.unqiueID = function() {
     return Math.random().toString(36).slice(2);
+}
+
+var oswaldCSS = document.createElement("style");
+oswaldCSS.setAttribute("id", global_clientID + "css");
+oswaldCSS.setAttribute("type", "text/css");
+var documentHead = document.head || document.querySelector("head");
+documentHead.appendChild(oswaldCSS);
+
+oswald.mode = "";
+oswald.css = function(css, mode, button) {
+    oswaldCSS.innerHTML = css;
+    oswald.mode = mode;
+    var oswaldButtons = [].slice.call(document.querySelectorAll(".oswald-button"));
+    oswaldButtons.forEach(function(item) {
+        if (item.classList) {
+            item.classList.remove("oswald-button-active");
+        } else {
+            item.className = item.className.replace(new RegExp('(^|\\b)' + "oswald-button-active".split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+        }
+    });
+    if (document.querySelector("[data-button-id='" + button + "']").classList) {
+        document.querySelector("[data-button-id='" + button + "']").classList.add("oswald-button-active");
+    } else {
+        document.querySelector("[data-button-id='" + button + "']").className += " oswald-button-active";
+    }
 }
 
 oswald.called = 0;
@@ -100,10 +120,19 @@ oswald.call = function(item) {
                     var data = JSON.parse(this.responseText);
                     oswaldStyles.innerHTML += data[1];
                     var oswaldCategories = "";
+                    var oswaldCategories_a = [], oswaldCategories_b = [];
+                    // Add Accessibility options
                     Object.keys(data[4]).forEach(function(item) {
-                        // Add Accessibility options
-                        oswaldCategories += "<button class='oswald-button'>" + item + "</button>";
+                        oswaldCategories_a.push(item);
                     });
+                    for (var key in data[4]) {
+                        if (Object.prototype.hasOwnProperty.call(data[4], key)) {
+                            oswaldCategories_b.push(data[4][key]);
+                        }
+                    }
+                    for (i = 0; i < oswaldCategories_a.length; i++) {
+                        oswaldCategories += "<button class='oswald-button' data-button-id='" + i + "' onclick='oswald.css(\"" + oswaldCategories_b[i] + "\", \"" + oswaldCategories_a[i] + "\", \"" + i + "\");'>" + oswaldCategories_a[i] + "</button>";
+                    }
                     oswaldLoad.innerHTML = data[3] + oswaldCategories + data[2];
                 } else {
                     errorlog("Error: Communication with Oswald server failed");

@@ -26,7 +26,7 @@ These features should be coming soon:
 
 ## Contribute
 
-The development mode of this script contains as many comments as I could add, it's hosted at `https://oswald.foundation/developers/oswald.min.js`. Got an idea? Throw in a pull request and we'll merge. :)
+The development mode of this script contains as many comments as I could add, it's hosted at `https://oswald.foundation/developers/oswald.js`. Got an idea? Throw in a pull request and we'll merge. :)
 
 ## License
 
