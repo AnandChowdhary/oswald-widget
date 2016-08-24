@@ -24,6 +24,10 @@ These features should be coming soon:
 - JS Methods for `oswald.start()` and more
 - Custom theme colors, CSS for client UI
 
+Known bugs:
+- Doesn't get the correct coordinates sometimes and renders is bottom-right
+- !important removes custom backgrounds
+
 ## Contribute
 
 The development mode of this script contains as many comments as I could add, it's hosted at `https://oswald.foundation/developers/oswald.js`. Got an idea? Throw in a pull request and we'll merge. :)

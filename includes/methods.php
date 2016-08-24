@@ -3,7 +3,7 @@
     $modes = array(
         "Dyslexia-friendly Mode" => "*{background:yellow}",
         "Large Font Size" => "body{font-size:20px !important}",
-        "Dark Mode" => "*{background:#000;color:#fff}"
+        "Dark Mode" => "*{background:#000 !important;color:#fff !important}"
     );
     if (isset($_GET["oswald_uniqueID"])) {
         $uid = $_GET["oswald_uniqueID"];
