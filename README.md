@@ -8,9 +8,19 @@ Over the past few weeks, [Oswald Foundation](https://oswald.foundation) has been
 
 What's great about this API is how easy it is to implement. Add the following line of code before the `<body>` tag closes.
 ```
-<script src="https://oswald.foundation/developers/oswald.js">
+<p><button data-oswald">Accessibility</button></p>
 <script src="https://oswald.foundation/developers/oswald.min.js">
 ```
+
+## Options
+
+- Oswald looks for all elements matching `data-oswald` or class `oswald-service`. The accessibility service starts when a use clicks on any of these elements, which are typically links or buttons.
+
+## Roadmap
+
+These features should be coming soon:
+- Custom/editable accessibility themes
+- JS Methods for `oswald.start()` and more
 
 ## License
 
