@@ -21,9 +21,9 @@
     $regionName = $data -> regionName;
 
     if (isset($_GET["client_id"]) && isset($_GET["event_info"])) {
-        DB::$user = "root";
-        DB::$password = "";
-        DB::$dbName = "oswald";
+        DB::$user = "classkwo_oswald";
+        DB::$password = "anand01";
+        DB::$dbName = "classkwo_oswald";
         DB::insert("analytics", array(
             "ip_address" => $ip,
             "datetime" => date("Y-m-d H:i:s"),
