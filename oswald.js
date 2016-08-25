@@ -19,10 +19,14 @@ oswaldCSS.setAttribute("type", "text/css");
 var documentHead = document.head || document.querySelector("head");
 documentHead.appendChild(oswaldCSS);
 
-oswald.mode = "";
+    oswald.mode = "";
 oswald.css = function(css, mode, button) {
+
+    // Add custom CSS
     oswaldCSS.innerHTML = css;
     oswald.mode = mode;
+
+    // Add active state to button
     var oswaldButtons = [].slice.call(document.querySelectorAll(".oswald-button"));
     oswaldButtons.forEach(function(item) {
         if (item.classList) {
@@ -36,6 +40,22 @@ oswald.css = function(css, mode, button) {
     } else {
         document.querySelector("[data-button-id='" + button + "']").className += " oswald-button-active";
     }
+
+    // Add analytics
+    var request2 = new XMLHttpRequest();
+    request2.open("GET", "includes/analytics.php?client_id=" + encodeURI(global_clientID) + "&event_info=" + encodeURI(mode), true);
+    request2.onreadystatechange = function() {
+        alert("Y");
+        if (this.readyState === 4) {
+            if (this.status >= 200 && this.status < 400) {
+                var data = this.responseText;
+                alert(data);
+            } else {
+                errorlog("Error: Analytics request failed");
+            }
+        }
+    };
+
 }
 
 oswald.called = 0;
@@ -112,7 +132,7 @@ oswald.call = function(item) {
 
         // Call Oswald server
         var request = new XMLHttpRequest();
-        var requestURL = "https://oswald.foundation/developers/includes/methods.php?oswald_uniqueID=" + global_clientID;
+        var requestURL = "includes/methods.php?oswald_uniqueID=" + global_clientID;
         request.open("GET", requestURL, true);
         request.onreadystatechange = function() {
             if (this.readyState === 4) {
