@@ -43,8 +43,8 @@ oswald.css = function(css, mode, button) {
 
     // Add analytics
     var request = new XMLHttpRequest();
-    //request.open("GET", "includes/analytics.php?client_id=" + encodeURI(global_clientID) + "&event_info=" + encodeURI(mode), true);
-    request.open("GET", "https://oswald.foundation/developers/includes/analytics.php?client_id=" + encodeURI(global_clientID) + "&event_info=" + encodeURI(mode), true);
+    request.open("GET", "includes/analytics.php?client_id=" + encodeURI(global_clientID) + "&event_info=" + encodeURI(mode), true);
+    //request.open("GET", "https://oswald.foundation/developers/includes/analytics.php?client_id=" + encodeURI(global_clientID) + "&event_info=" + encodeURI(mode), true);
     request.onreadystatechange = function() {
         if (this.readyState === 4) {
             if (this.status >= 200 && this.status < 400) {
@@ -136,8 +136,8 @@ oswald.call = function(item) {
 
         // Call Oswald server
         var request = new XMLHttpRequest();
-        //var requestURL = "includes/methods.php?oswald_uniqueID=" + global_clientID;
-        var requestURL = "https://oswald.foundation/developers/includes/methods.php?oswald_uniqueID=" + global_clientID;
+        var requestURL = "includes/methods.php?oswald_uniqueID=" + global_clientID;
+        //var requestURL = "https://oswald.foundation/developers/includes/methods.php?oswald_uniqueID=" + global_clientID;
         request.open("GET", requestURL, true);
         request.onreadystatechange = function() {
             if (this.readyState === 4) {
