@@ -1,5 +1,17 @@
 # Oswald Accessibility Widget
 
+## ⚠️ Archive Notice
+
+In 2016, I co-founded Oswald Labs, an accessibility technology company. This repository contains the earliest version of our flagship web accessibility plugin, before Oswald Labs was even incorporated. Since then, we've come a long way with our widget — which is now used by thousands of users every month.
+
+Before you continue on to the README, here are some links:
+
+- [Oswald Labs](https://oswaldlabs.com)
+- [Agastya by Oswald Labs](https://oswaldlabs.com/platform/agastya/)
+- [@OswaldLabsOpenSource](https://github.com/OswaldLabsOpenSource)
+
+Everything below is untouched from 2016.
+
 ## Synopsis
 
 Over the past few weeks, [Oswald Foundation](https://oswald.foundation) has been working on introducing a global accessibility standard for web designers and developers. This API is a one-line customizable backward-compatible (IE8+) solution to help implement accessibility features like Dyslexia-friendly mode and Dark mode in websites.
